@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Записи сообщества {{group.title}} | Yatube</title>
+  </head>
+  <body>
+    <h1>{{group.title}}</h1>
+    <p>
+        {{group.description}}
+    </p>
+    {% for post in posts %}
+    {% include "post_item.html" with post=post %}
+  {% endfor %}
+  
+  {% if page.has_other_pages %}
+      {% include "paginator.html" with items=page paginator=paginator%}
+  {% endif %}
+  
+  {% endblock %}
