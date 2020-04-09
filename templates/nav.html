@@ -1,14 +1,24 @@
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-    <a class="navbar-brand" href="/"><span style="color:red">Ya</span>tube</a>
-    <nav class="my-2 my-md-0 mr-md-3">
-        {% if user.is_authenticated %}
-        Пользователь: {{ user.username }}.
-        <a class="p-2 text-dark" href="{% url 'password_change' %}">Изменить пароль</a>
-        <a class="p-2 text-dark" href="{% url 'logout' %}">Выйти</a>
-        <a class="p-2 text-dark" href="{% url 'new_post' %}">Новая запись</a>
-        {% else %}
-        <a class="p-2 text-dark" href="{% url 'login' %}">Войти</a> |
-        <a class="p-2 text-dark" href="{% url 'signup' %}">Регистрация</a>
-        {% endif %}
-    </nav>
+<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+  <a class="navbar-brand" href="/"><span style="color:red">Ya</span>tube-Library</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      {% if user.is_authenticated %}
+      <span class="navbar-text text-reset">Пользователь: {{ user.username }}.</span>
+      <a class="nav-item nav-link" href="{% url 'new_post' %}">Добавить запись</a>
+      <span class="navbar-text">|</span>
+      <a class="nav-item nav-link" href="{% url 'add_group' %}">Добавить тэг</a>
+      <span class="navbar-text">|</span>
+      <a class="nav-item nav-link" href="{% url 'password_change' %}">Изменить пароль</a>
+      <span class="navbar-text">|</span>
+      <a class="nav-item nav-link" href="{% url 'logout' %}">Выйти</a>
+      {% else %}
+      <a class="nav-item nav-link" href="{% url 'login' %}">Войти</a>
+      <span class="navbar-text">|</span>
+      <a class="nav-item nav-link" href="{% url 'signup' %}">Регистрация</a>
+      {% endif %}
+    </div>
+  </div>
 </nav>

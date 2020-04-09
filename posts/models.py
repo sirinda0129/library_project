@@ -26,9 +26,8 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name="author_posts",
                                verbose_name="Пользователь")
-    tags = models.ManyToManyField(Group, on_delete=models.CASCADE,
-                                  related_name="tags_posts", blank=True,
-                                  null=True, verbose_name="Тэги")
+    group = models.ManyToManyField(Group, related_name="tags_posts", blank=True,
+                                   verbose_name="Тэги")
     language = models.CharField(max_length=2, choices=LANGUAGE_DICT, verbose_name="Язык")
     class Meta:
         verbose_name = "Публикация"

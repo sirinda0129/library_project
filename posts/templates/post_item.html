@@ -1,0 +1,39 @@
+<div class="card mb-3 shadow-sm border-0">
+  <!-- Отображение текста поста -->
+  <div class="card-body">
+    <p class="card-text">
+      <a class="h2" href="{{ post.url }}">{{post.title}}</a>
+      <!-- Ссылка на автора через @ -->
+      <p>
+        <a name="post_{{ post.id }}" href="{% url 'profile' post.author.username %}">
+          <strong class="d-block text-gray-dark">@{{ post.author }}</strong>
+        </a>
+      </p>
+      <p>
+        {{ post.description }}
+      </p>
+    </p>
+    <!-- Если пост относится к какому-нибудь сообществу, то отобразим ссылку на него через # -->
+    {% if post.group %}
+      {% for group in post.group.all %}
+        <div class="btn-group">
+          <a class="card-link muted" href="{% url 'group' group.slug %}">
+            <strong class="d-block text-gray-dark">#{{ group.title }}</strong>
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="btn-group ">
+        <!-- Ссылка на редактирование поста для автора -->
+        {% if user == post.author %}
+        <a class="btn btn-sm text-muted" href="{% url 'post_edit' post.id %}" role="button">
+          Редактировать
+        </a>
+        {% endif %}
+      </div>
+      <!-- Дата публикации поста -->
+      <small class="text-muted">{{ post.pub_date }}</small>
+    </div>
+  </div>
+</div>

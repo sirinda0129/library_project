@@ -1,10 +1,41 @@
 {% extends "base.html" %}
-{% block title %}Создать новый пост{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block content %}
+{% load user_filters %}
 
-<form style="text-align: center; margin-top: 250px;" method="post" enctype="multipart/form-data" action="{% url 'new_post' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Опубликовать">
-</form>
+<div class="d-flex flex-column">
+  <div class="p-5">
+    <div class="card">
+      <div class="card-header text-center">{{ title }}</div>
+      <div class="card-body">
+        {% if form.errors %}
+          {% for error in form.errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ error|escape }}
+            </div>
+          {% endfor %}
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for field in form %}
+          <div class="form-group row" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
+            <label for="{{ field.id_for_label }}" class="col-sm-2">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
+            <div class="col-sm-10">
+              {{ field|addclass:"form-control" }}
+              {% if field.help_text %}
+              <small id="{{ field.id_for_label }}-help" class="form-text text-muted">{{ field.help_text|safe }}</small>
+              {% endif %}
+            </div>                
+          </div>
+          {% endfor %}
+          <div class="col-md-6 offset-md-5">              
+            <button type="submit" class="btn btn-primary">
+              {{ title }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
