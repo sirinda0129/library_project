@@ -14,3 +14,9 @@ __pycache__/
 *.sublime-workspace
 
 .vscode/
+
+db.sqlite3
+
+migrations/
+
+static/
