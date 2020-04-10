@@ -17,6 +17,7 @@ urlpatterns = [
         path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
         path('terms/', views.flatpage, {'url': '/terms/'}, name='terms'),
         path('api-token-auth/', v.obtain_auth_token),
+        path('api/v1/', include('api.urls')),
         path("", include("posts.urls")),
 ]
 
