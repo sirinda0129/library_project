@@ -1,24 +1,33 @@
-<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
-  <a class="navbar-brand" href="/"><span style="color:red">Ya</span>tube-Library</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      {% if user.is_authenticated %}
-      <span class="navbar-text text-reset">Пользователь: {{ user.username }}.</span>
-      <a class="nav-item nav-link" href="{% url 'new_post' %}">Добавить запись</a>
-      <span class="navbar-text">|</span>
-      <a class="nav-item nav-link" href="{% url 'add_group' %}">Добавить тэг</a>
-      <span class="navbar-text">|</span>
-      <a class="nav-item nav-link" href="{% url 'password_change' %}">Изменить пароль</a>
-      <span class="navbar-text">|</span>
-      <a class="nav-item nav-link" href="{% url 'logout' %}">Выйти</a>
-      {% else %}
-      <a class="nav-item nav-link" href="{% url 'login' %}">Войти</a>
-      <span class="navbar-text">|</span>
-      <a class="nav-item nav-link" href="{% url 'signup' %}">Регистрация</a>
-      {% endif %}
-    </div>
+<header class="header">
+  <div class="header__wrapper">
+      <a class="header__logo" href="{% url 'index' %}"><span class="header__logo--accent">Ya</span>Library</a>
+      <nav class="header__user-menu user-menu">
+          <ul class="user-menu__list">
+          {% if user.is_authenticated %}
+              <li>
+                  <a class="user-menu__item user-menu__item--undecorated" href="">Пользователь: {{ user.username }}</a><span class="user-menu__spliter">|</span>
+              </li>
+              <li>
+                  <a class="user-menu__item" href="{% url 'new_post' %}">Добавить пост</a><span class="user-menu__spliter">|</span>
+              </li>
+              <li>
+                <a class="user-menu__item" href="{% url 'add_group' %}">Добавить тэг</a><span class="user-menu__spliter">|</span>
+              </li>
+              <li>
+                  <a class="user-menu__item" href="{% url 'password_change' %}">Изменить пароль</a><span class="user-menu__spliter">|</span>
+              </li>
+              <li>
+                  <a class="user-menu__item" href="{% url 'logout' %}">Выйти</a>
+              </li>
+          {% else %}
+              <li>
+                  <a class="user-menu__item" href="{% url 'login' %}">Войти</a>
+              </li>
+              <li>
+                  <a class="user-menu__item" href="{% url 'signup' %}">Регистрация</a>
+              </li>
+          {% endif %}
+          </ul>
+      </nav>
   </div>
-</nav>
+</header>

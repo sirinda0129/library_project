@@ -6,19 +6,17 @@
         <title>{% block title %}Заголовок страницы{% endblock %} | Yatube</title>
         <!-- Загрузка статики -->
         {% load static %}
-        <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'style/style.css' %}">
         <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
         <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
     </head>
     <body>
         {% include 'nav.html' %}
-        <main>
-            <div class="container pt-2">
-                {% block content %}
+        <main class="content-block">
+            {% block content %}
                 <!-- Содержимое страницы -->
-                {% endblock content %}
-            </div>
+            {% endblock content %}
         </main>
         {% include 'footer.html' %}
-</body>
+    </body>
 </html>

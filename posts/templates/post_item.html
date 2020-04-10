@@ -1,39 +1,30 @@
-<div class="card mb-3 shadow-sm border-0">
-  <!-- Отображение текста поста -->
-  <div class="card-body">
-    <p class="card-text">
-      <a class="h2" href="{% url 'post' post.id %}">{{post.title}}</h2>
-      <!-- Ссылка на автора через @ -->
-      <p>
-        <a href="{{ post.url }}">{{ post.url }}</a> - {{ post.description }} ({{ post.get_language_display }})
-      </p>
-      <p>
-        <a name="post_{{ post.id }}" href="{% url 'profile' post.author.username %}">
-          <strong class="d-block text-gray-dark">@{{ post.author }}</strong>
-        </a>
-      </p>
+<article class="post">
+  <h1 class="post__heading">
+      <a class="post-link link" href="{% url 'post' post.id %}">{{post.title}}</a>
+  </h1>
+  <p class="post__text">
+    <a class="post__link link" href="{{ post.url }}">{{ post.url }}</a> - {{ post.description }} ({{ post.get_language_display }})
+  </p>
+  <div class="post__supplementary">
+    <!-- Автор поста -->
+    <p class="post__author">
+      <a class="post__link link" name="post_{{ post.id }}" href="{% url 'profile' post.author.username %}">@{{ post.author }}</a>
     </p>
-    <!-- Если пост относится к какому-нибудь сообществу, то отобразим ссылку на него через # -->
-    <div class="btn-group">
+    <!-- Теги -->
+    <div class="post__btn-group">
       {% if post.group %}
         {% for group in post.group.all %}
-          <a class="card-link muted" href="{% url 'group' group.slug %}">
-            <strong class="d-block text-gray-dark">#{{ group.title }}</strong>
-          </a>
+          <a class="post__link link" href="{% url 'group' group.slug %}">#{{ group.title }}</a>
         {% endfor %}
       {% endif %}
     </div>
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="btn-group ">
-        <!-- Ссылка на редактирование поста для автора -->
-        {% if user == post.author %}
-        <a class="btn btn-sm text-muted" href="{% url 'post_edit' post.id %}" role="button">
-          Редактировать
-        </a>
-        {% endif %}
+  </div> 
+  <!-- Кнопка редактирования -->
+  {% if post.author.username == user.username %}
+      <div class="post__btn-group">
+          <a href="{% url 'post_edit' post_id=post.id %}" class="btn btn--light">Редактировать</a>
       </div>
-      <!-- Дата публикации поста -->
-      <small class="text-muted">{{ post.pub_date }}</small>
-    </div>
-  </div>
-</div>
+  {% endif %}
+  <!-- Дата публикации поста -->
+  <date class="post__date" date="{{ post.pub_date }}">{{ post.pub_date }}</date>
+</article>

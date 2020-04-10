@@ -1,32 +1,19 @@
 {% extends "base.html" %}
 {% block title %} Записи по тэгу {{group.title}} {% endblock %}
 {% block content %}
-
-<main role="main" class="container">
-  <div class="row">
-    <div class="col-md-3 mb-3 mt-1">
-      <div class="card">
-        <div class="card-body">
-          <div class="h2">
-            {{ group.title }}
-          </div>
-          <div class="h3 text-muted">
-            @{{ group.slug }}
-          </div>
-          <div class="h4">
-            {{ group.description }}
-          </div>
-        </div>
-      </div>
+  <section class="group-block">
+    <div class="group-block__wrapper">
+        <h1 class="group-block__heading">{{ group.title }}</h1>
+        <p class="group-block__slug">@{{ group.slug }}</p>
+        <p class="group-block__description">{{ group.description }}</p>
+        <ul class="group-block__post-list post-list">
+            {% for post in page %}
+                <li class="post-list__item">
+                    {% include "post_item.html" with post=post %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% include "paginator.html" with items=page paginator=paginator %}
     </div>
-    <div class="col-md-9">
-      {% for post in page %}
-        {% include "post_item.html" with post=post %} 
-      {% endfor %}
-    </div>
-  </div>
-    {% if page.has_other_pages %}
-      {% include "paginator.html" with items=page paginator=paginator%}
-    {% endif %}
-</main>
+  </section>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
 {% load user_filters %}
 
-<div class="d-flex flex-column">
+<!-- <div class="d-flex flex-column">
   <div class="p-5">
     <div class="card">
       <div class="card-header text-center">{{ title }}</div>
@@ -37,5 +37,25 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<section class="new-post">
+  <div class="form-card__wrapper">
+      <h1 class="form-card__heading">{{ title }}</h1>
+      <form class="form-card__form new-post__form" method="POST" enctype="multipart/form-data">
+          {% for field in form %}
+          {% csrf_token %}
+              <div class="form-card__field field">
+                {{ field.errors }}
+                  <label for="{{ field.id_for_label }}" class="field__label">{{ field.label }}{% if field.field.required %}<span class="field__required">*</span>{% endif %}</label>
+                  {{ field|addclass:"field__input" }}
+                  {% if field.help_text %}
+                      <div class="field__help-text">{{ field.help_text }}</div>
+                  {% endif %}
+              </div>
+          {% endfor %}
+          <button type="submit" class="btn">{{ title }}</button>
+      </form>
+  </div>
+</section>
 {% endblock %}
