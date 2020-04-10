@@ -9,7 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["id", "author", "text", "url", "group", "pub_date"]
+        fields = ["id", "title", "author", "description", "url", "group", "pub_date", "language"]
 
 
 class GroupSerializer(serializers.ModelSerializer):
