@@ -3,59 +3,23 @@
 {% block content %}
 {% load user_filters %}
 
-<!-- <div class="d-flex flex-column">
-  <div class="p-5">
-    <div class="card">
-      <div class="card-header text-center">{{ title }}</div>
-      <div class="card-body">
-        {% if form.errors %}
-          {% for error in form.errors %}
-            <div class="alert alert-danger" role="alert">
-              {{ error|escape }}
-            </div>
-          {% endfor %}
-        {% endif %}
-        <form method="POST" enctype="multipart/form-data">
-          {% csrf_token %}
-          {% for field in form %}
-          <div class="form-group row" aria-required={% if field.field.required %}"true"{% else %}"false"{% endif %}>
-            <label for="{{ field.id_for_label }}" class="col-sm-2">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label>
-            <div class="col-sm-10">
-              {{ field|addclass:"form-control" }}
-              {% if field.help_text %}
-              <small id="{{ field.id_for_label }}-help" class="form-text text-muted">{{ field.help_text|safe }}</small>
-              {% endif %}
-            </div>                
-          </div>
-          {% endfor %}
-          <div class="col-md-6 offset-md-5">              
-            <button type="submit" class="btn btn-primary">
-              {{ title }}
-            </button>
-          </div>
+  <section class="new-post">
+    <div class="form-card__wrapper">
+        <h1 class="form-card__heading">{{ title }}</h1>
+        <form class="form-card__form new-post__form" method="POST" enctype="multipart/form-data">
+            {% for field in form %}
+            {% csrf_token %}
+                <div class="form-card__field field">
+                  {{ field.errors }}
+                    <label for="{{ field.id_for_label }}" class="field__label">{{ field.label }}{% if field.field.required %}<span class="field__required">*</span>{% endif %}</label>
+                    {{ field|addclass:"field__input" }}
+                    {% if field.help_text %}
+                        <div class="field__help-text">{{ field.help_text }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn">{{ title }}</button>
         </form>
-      </div>
     </div>
-  </div>
-</div> -->
-
-<section class="new-post">
-  <div class="form-card__wrapper">
-      <h1 class="form-card__heading">{{ title }}</h1>
-      <form class="form-card__form new-post__form" method="POST" enctype="multipart/form-data">
-          {% for field in form %}
-          {% csrf_token %}
-              <div class="form-card__field field">
-                {{ field.errors }}
-                  <label for="{{ field.id_for_label }}" class="field__label">{{ field.label }}{% if field.field.required %}<span class="field__required">*</span>{% endif %}</label>
-                  {{ field|addclass:"field__input" }}
-                  {% if field.help_text %}
-                      <div class="field__help-text">{{ field.help_text }}</div>
-                  {% endif %}
-              </div>
-          {% endfor %}
-          <button type="submit" class="btn">{{ title }}</button>
-      </form>
-  </div>
-</section>
+  </section>
 {% endblock %}
