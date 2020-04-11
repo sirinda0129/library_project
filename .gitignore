@@ -20,3 +20,5 @@ db.sqlite3
 migrations/
 
 static/
+
+sent_emails/

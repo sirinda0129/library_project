@@ -22,18 +22,20 @@ def group_posts(request, slug):
     page = paginator.get_page(page_number)
     return render(request, "group.html", {'group': group, 'page': page, 'paginator': paginator})
 
-@login_required
+
+# @login_required
 def new_post(request):
-    title = 'Опубликовать запись'
+    title = 'Предложить запись'
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
+            # post = form.save(commit=False)
+            # post.author = request.user
+            form.save()
             return redirect("index")
     form = PostForm()
     return render(request, "new_post.html", {"form": form, "title": title})
+
 
 @login_required
 def post_edit(request, post_id):
@@ -53,19 +55,23 @@ def post_edit(request, post_id):
 
 def profile(request, username):
     user_profile = get_object_or_404(User, username=username)
-    post_list = Post.objects.filter(author=user_profile).order_by("-pub_date").all()
+    post_list = Post.objects.filter(
+        author=user_profile).order_by("-pub_date").all()
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    return render(request, "profile.html", {'profile':user_profile,
-                                            'page':page,
-                                            'paginator':paginator,})
+    return render(request, "profile.html", {'profile': user_profile,
+                                            'page': page,
+                                            'paginator': paginator, })
 
-def page_not_found(request, exception): # noqa, pylint: disable=unused-argument
+
+def page_not_found(request, exception):  # noqa, pylint: disable=unused-argument
     return render(request, "misc/404.html", {"path": request.path}, status=404)
+
 
 def server_error(request):
     return render(request, "misc/500.html", status=500)
+
 
 def add_group(request):
     title = 'Добавить тэг'
@@ -76,10 +82,11 @@ def add_group(request):
             group.slug = slugify(group.title)
             form.save()
             return redirect("group", slug=group.slug)
-        return render(request, "new_post.html", {'form':form, 'title':title})
+        return render(request, "new_post.html", {'form': form, 'title': title})
     form = GroupForm()
-    return render(request, "new_post.html", {'form':form, 'title':title})
+    return render(request, "new_post.html", {'form': form, 'title': title})
+
 
 def post_view(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    return render(request, 'post_view.html', {'post':post})
+    return render(request, 'post_view.html', {'post': post})

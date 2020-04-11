@@ -3,22 +3,18 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Заголовок страницы{% endblock %} | Yatube</title>
-        <!-- Загрузка статики -->
+        <title>{% block title %}Заголовок страницы{% endblock %} | YaLibrary</title>
         {% load static %}
-        <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
-        <script src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-        <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'style/style.css' %}">
     </head>
     <body>
         {% include 'nav.html' %}
-        <main>
-            <div class="container pt-2">
-                {% block content %}
+        <main class="content-block">
+            {% block content %}
                 <!-- Содержимое страницы -->
-                {% endblock content %}
-            </div>
+            {% endblock content %}
         </main>
         {% include 'footer.html' %}
-</body>
+        <script src="{% static 'js/script.js' %}"></script>
+    </body>
 </html>

@@ -1,30 +1,26 @@
 {% extends "base.html" %} 
 {% block title %} {{ profile.get_full_name }} @{{ profile.username }}{% endblock %}
 {% block content %}
-
-<main role="main" class="container">
-  <div class="row">
-    <div class="col-md-3 mb-3 mt-1">
-      <div class="card">
-        <div class="card-body">
-          <div class="h2">
-            {{ profile.get_full_name }}
-          </div>
-          <div class="h3 text-muted">
-            @{{ profile.username }}
-          </div>
-        </div>
+  <div class="profile-container">
+    <section class="user-profile">
+      <div class="user-profile__wrapper">
+        <h1 class="user-profile__heading">{{ profile.get_full_name }}</h1>
+        <span class="user-profile__nickname">@{{ profile.username }}</span>
       </div>
-    </div>
-
-    <div class="col-md-9"> 
-    {% for post in page %}
-      {% include "post_item.html" with post=post %}
-    {% endfor %}
-    </div>
+    </section>
+    <section class="user-posts">
+      <div class="user-posts__wrapper">
+        <h1 class="user-posts__heading">Все записи пользователя {{ post.author }}</h1>
+        <ul class="user-posts__list post-list">
+          {% for post in page %}
+            <li class="post-list__item">
+              {% include "post_item.html" with post=post %}
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% include "paginator.html" with items=page paginator=paginator %}
+    </section>
   </div>
-  {% if page.has_other_pages %}
-    {% include "paginator.html" with items=page paginator=paginator%}
-  {% endif %}
-</main>
 {% endblock %}
+
