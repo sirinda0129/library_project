@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header__wrapper">
       <a class="header__logo" href="{% url 'index' %}"><span class="header__logo--accent">Ya</span>Library</a>
-      <nav class="header__user-menu user-menu">
+      <nav class="header__user-menu user-menu header__user-menu--closed">
           <ul class="user-menu__list">
           {% if user.is_authenticated %}
               <li>
@@ -29,5 +29,8 @@
           {% endif %}
           </ul>
       </nav>
+      <button type="button" class="burger-menu-btn" aria-label="Кнопка управления пользовательским меню">
+        <span class="burger-menu-btn__line"></span>
+      </button>
   </div>
 </header>
