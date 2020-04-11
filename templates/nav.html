@@ -3,30 +3,9 @@
       <a class="header__logo" href="{% url 'index' %}"><span class="header__logo--accent">Ya</span>Library</a>
       <nav class="header__user-menu user-menu header__user-menu--closed">
           <ul class="user-menu__list">
-          {% if user.is_authenticated %}
               <li>
-                  <a class="user-menu__item user-menu__item--undecorated" href="">Пользователь: {{ user.username }}</a><span class="user-menu__spliter">|</span>
+                  <a class="user-menu__item" href="{% url 'new_post' %}">Предложить запись</a>
               </li>
-              <li>
-                  <a class="user-menu__item" href="{% url 'new_post' %}">Добавить пост</a><span class="user-menu__spliter">|</span>
-              </li>
-              <li>
-                <a class="user-menu__item" href="{% url 'add_group' %}">Добавить тэг</a><span class="user-menu__spliter">|</span>
-              </li>
-              <li>
-                  <a class="user-menu__item" href="{% url 'password_change' %}">Изменить пароль</a><span class="user-menu__spliter">|</span>
-              </li>
-              <li>
-                  <a class="user-menu__item" href="{% url 'logout' %}">Выйти</a>
-              </li>
-          {% else %}
-              <li>
-                  <a class="user-menu__item" href="{% url 'login' %}">Войти</a>
-              </li>
-              <li>
-                  <a class="user-menu__item" href="{% url 'signup' %}">Регистрация</a>
-              </li>
-          {% endif %}
           </ul>
       </nav>
       <button type="button" class="burger-menu-btn" aria-label="Кнопка управления пользовательским меню">

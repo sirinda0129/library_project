@@ -6,10 +6,6 @@
     <a class="post__link link" href="{{ post.url }}">{{ post.url }}</a> - {{ post.description }} ({{ post.get_language_display }})
   </p>
   <div class="post__supplementary">
-    <!-- Автор поста -->
-    <p class="post__author">
-      <a class="post__link link" name="post_{{ post.id }}" href="{% url 'profile' post.author.username %}">@{{ post.author }}</a>
-    </p>
     <!-- Теги -->
     <div class="post__btn-group">
       {% if post.group %}
@@ -19,12 +15,6 @@
       {% endif %}
     </div>
   </div> 
-  <!-- Кнопка редактирования -->
-  {% if post.author.username == user.username %}
-      <div class="post__btn-group">
-          <a href="{% url 'post_edit' post_id=post.id %}" class="btn btn--light">Редактировать</a>
-      </div>
-  {% endif %}
   <!-- Дата публикации поста -->
   <date class="post__date" date="{{ post.pub_date }}">{{ post.pub_date }}</date>
 </article>
