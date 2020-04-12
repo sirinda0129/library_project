@@ -2,6 +2,8 @@ import os
 
 from django.shortcuts import get_object_or_404
 from dotenv import load_dotenv
+
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -28,6 +30,8 @@ class PostViewSet(ModelViewSet):
 
 
 class APIGroup(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get(self, request, slug):
         group = get_object_or_404(Group, slug=slug)
         posts = Post.objects.filter(group=group, approved=True)
