@@ -4,12 +4,10 @@ from posts.models import Group, Post
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.SlugRelatedField(
-        read_only=True, slug_field="username")
-
+    group = serializers.StringRelatedField(many=True)
     class Meta:
         model = Post
-        fields = ["id", "title", "author", "description", "url", "group", "pub_date", "language"]
+        fields = ["id", "title", "description", "url", "group", "pub_date", "language"]
 
 
 class GroupSerializer(serializers.ModelSerializer):

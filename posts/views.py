@@ -1,13 +1,19 @@
+import os
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 # from django.contrib.auth.decorators import login_required
 # from pytils.translit import slugify
+from dotenv import load_dotenv
+from api.telegram import send_telegram
 from .models import Post, Group # User
 from .forms import PostForm # GroupForm
 
+load_dotenv()
+
+CHAT_ID = os.getenv('CHAT_ID')
 
 def index(request):
-    post_list = Post.objects.filter(approved=True).order_by("-pub_date").all()
+    post_list = Post.objects.filter(approved=True).order_by("-pub_date")
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -32,6 +38,7 @@ def new_post(request):
             # post = form.save(commit=False)
             # post.author = request.user
             form.save()
+            send_telegram(CHAT_ID)
             return redirect("index")
     form = PostForm()
     return render(request, "new_post.html", {"form": form, "title": title})

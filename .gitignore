@@ -22,3 +22,5 @@ migrations/
 static/
 
 sent_emails/
+
+.env
