@@ -1,21 +1,22 @@
-<nav aria-label="Переключение страниц">
-    <ul class="pagination justify-content-center">
+<ul class="paginator">
+    {% if paginator.num_pages > 1 %}
         {% if items.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page={{ items.previous_page_number }}">&laquo; Предыдущая</a></li>
+            <li class="paginator__item"><a class="paginator__link" href="?page={{ items.previous_page_number }}">&laquo; Предыдущая</a></li>
         {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo; Предыдущая</a></li>
+            <li class="paginator__item paginator__item--disabled"><a class="paginator__link" href="#" abindex="-1" aria-disabled="true">&laquo; Предыдущая</a></li>
         {% endif %}
         {% for i in paginator.page_range %}
-                {% if items.number == i %}
-                <li class="page-item active"><span class="page-link">{{ i }} <span class="sr-only">(текущая)</span></span></li>
-                {% else %}
-                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
+            {% if items.number == i %}
+                <li class="paginator__item paginator__item--active"><a class="paginator__link">{{ i }}</a></li>
+            {% else %}
+                <li class="paginator__item"><a class="paginator__link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
         {% endfor %}
         {% if items.has_next %}
-                <li class="page-item"><a class="page-link" href="?page={{ items.next_page_number }}">Следующая &raquo;</a></li>
+            <li class="paginator__item"><a class="paginator__link" href="?page={{ items.next_page_number }}">Следующая &raquo;</a></li>
         {% else %}
-                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Следующая &raquo;</a></li>
+            <li class="paginator__item paginator__item--disabled"><a class="paginator__link" href="#" tabindex="-1" aria-disabled="true">Следующая &raquo;</a></li>
         {% endif %}
-    </ul>
-</nav>
+    {% endif %}
+</ul>
+    
