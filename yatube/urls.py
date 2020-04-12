@@ -12,8 +12,8 @@ handler500 = "posts.views.server_error"
 urlpatterns = [
         path("admin/", admin.site.urls),
         path("about/", include("django.contrib.flatpages.urls")),
-        path("auth/", include("users.urls")),
-        path("auth/", include("django.contrib.auth.urls")),
+        # path("auth/", include("users.urls")),
+        # path("auth/", include("django.contrib.auth.urls")),
         path('about-us/', views.flatpage, {'url': '/about-us/'}, name='about'),
         path('terms/', views.flatpage, {'url': '/terms/'}, name='terms'),
         path('api-token-auth/', v.obtain_auth_token),

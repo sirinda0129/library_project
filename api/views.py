@@ -1,11 +1,11 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+# from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from posts.models import Group, Post, User
+from posts.models import Group, Post # User
 
 from .serializers import GroupSerializer, PostSerializer
 from .permissions import IsAuthorOrReadOnly
