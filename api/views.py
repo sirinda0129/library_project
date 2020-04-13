@@ -11,7 +11,7 @@ from rest_framework.viewsets import ModelViewSet
 from posts.models import Group, Post
 
 from .permissions import IsAdminOrReadOnly
-from .serializers import PostSerializer
+from .serializers import PostSerializer, GroupSerializer
 from .telegram import send_telegram
 
 
@@ -37,3 +37,10 @@ class APIGroup(APIView):
         posts = Post.objects.filter(group=group, approved=True)
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
+
+
+class GroupViewSet(ModelViewSet):
+    queryset = Group.objects.all()
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    lookup_field = "slug"
+    serializer_class = GroupSerializer
