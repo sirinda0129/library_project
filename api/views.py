@@ -29,16 +29,6 @@ class PostViewSet(ModelViewSet):
         send_telegram(CHAT_ID)
 
 
-class APIGroup(APIView):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-
-    def get(self, request, slug):
-        group = get_object_or_404(Group, slug=slug)
-        posts = Post.objects.filter(group=group, approved=True)
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
-
-
 class GroupViewSet(ModelViewSet):
     queryset = Group.objects.all()
     permission_classes = [IsAuthenticatedOrReadOnly]
