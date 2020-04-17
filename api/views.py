@@ -20,7 +20,7 @@ CHAT_ID = os.getenv("CHAT_ID")
 
 
 class PostViewSet(ModelViewSet):
-    queryset = Post.objects.filter(approved=True)
+    queryset = Post.objects.filter(approved=True).order_by("-pub_date")
     serializer_class = PostSerializer
     permission_classes = [IsAdminOrReadOnly]
 

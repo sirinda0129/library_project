@@ -40,6 +40,8 @@ def new_post(request):
             form.save()
             send_telegram(CHAT_ID)
             return redirect("index")
+        form = PostForm(request.POST)
+        return render(request, "new_post.html", {'form': form, 'title': title})
     form = PostForm()
     return render(request, "new_post.html", {"form": form, "title": title})
 
