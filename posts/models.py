@@ -8,9 +8,11 @@ class Group(models.Model):
     title = models.CharField(max_length=200, verbose_name="Название")
     slug = models.SlugField(unique=True)
     description = models.TextField(max_length=500, blank=True, null=True, verbose_name="Описание")
+
     class Meta:
         verbose_name = "Тэг"
         verbose_name_plural = "Тэги"
+
     def __str__(self):
         return self.title
 
@@ -19,7 +21,7 @@ class Post(models.Model):
     LANGUAGE_DICT = [('RU', 'Русский'), ('EN', 'English')]
     title = models.CharField(max_length=200, verbose_name="Заголовок")
     description = models.TextField(blank=True, null=True, verbose_name="Описание")
-    url = models.URLField(verbose_name="Ссылка")
+    url = models.URLField(unique=True, verbose_name="Ссылка")
     pub_date = models.DateTimeField("Дата публикации", auto_now_add=True, db_index=True)
     # author = models.ForeignKey(User, on_delete=models.CASCADE,
     #                            related_name="author_posts",
