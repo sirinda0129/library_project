@@ -1,6 +1,6 @@
-django==2.2.10
-djangorestframework
-django-cors-headers
-requests
-pytils
-python-dotenv
+Django==2.2.10
+django-cors-headers==3.2.1
+django-filter==2.2.0
+djangorestframework==3.11.0
+python-dotenv==0.12.0
+pytils==0.3
