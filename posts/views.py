@@ -97,5 +97,5 @@ def server_error(request):
 
 
 def post_view(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
+    post = get_object_or_404(Post, pk=post_id, approved=True)
     return render(request, 'post_view.html', {'post': post})
