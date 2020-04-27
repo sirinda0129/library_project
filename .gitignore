@@ -24,3 +24,4 @@ static/
 sent_emails/
 
 .env
+ansible.log

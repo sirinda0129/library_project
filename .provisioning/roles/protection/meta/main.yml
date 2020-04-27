@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: upgrade
+    when: upgrade_was_executed is not defined

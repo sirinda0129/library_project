@@ -1,0 +1,8 @@
+[servers]
+praktikum.must-hw.pw
+
+[all:vars]
+# Sudo user
+ansible_user=root
+# Docker networks
+external_network=traefik

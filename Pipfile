@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+python-dotenv = "==0.12.0"
+pytest-django = "*"
+pylint = "*"
+pycodestyle = "*"
+ansible = "*"
+
+[packages]
+django-cors-headers = "==3.2.1"
+django-filter = "==2.2.0"
+djangorestframework = "==3.11.0"
+pytils = "==0.3"
+Django = "==2.2.10"
+requests = "*"
+
+[requires]
+python_version = "3.7"

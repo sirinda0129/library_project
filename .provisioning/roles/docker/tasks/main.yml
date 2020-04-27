@@ -1,0 +1,56 @@
+- name: Install system required packages
+  apt:
+    name: ["apt-transport-https", "ca-certificates", "curl", "software-properties-common", "python3-pip"]
+    state: latest
+
+- name: Get the apt package facts
+  package_facts:
+    manager: apt
+    strategy: first
+
+#- name: Print the packages facts
+#  debug:
+#    var: ansible_facts.packages
+
+- name: Install Docker apt-key
+  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  when: ansible_facts.packages['docker-ce'] is not defined
+
+- name: Install Docker sources.list
+  shell: sh -c 'add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"'
+  when: ansible_facts.packages['docker-ce'] is not defined
+
+- name: Install Docker
+  apt:
+    update_cache: yes
+    name: docker-ce
+    state: latest
+  when: ansible_facts.packages['docker-ce'] is not defined
+
+- name: Upload Docker daemon config
+  template:
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+  when: ansible_facts.packages['docker-ce'] is not defined
+
+- name: Restart Docker service
+  systemd:
+    state: restarted
+    name: docker
+  when: ansible_facts.packages['docker-ce'] is not defined
+
+- name: Install python dependencies
+  pip:
+    name: ["docker", "docker-compose"]
+    state: latest
+
+- name: Add docker data directory
+  file:
+    path: "/srv/docker"
+    state: directory
+    mode: 0700
+
+- name: "Define role executed var {{ role_name }}_was_executed"
+  set_fact:
+    "{{ role_name }}_was_executed": true
+    cacheable: true

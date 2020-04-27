@@ -1,0 +1,39 @@
+- name: Add 'Traefik' data directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0700
+  with_items:
+    - /srv/docker/traefik
+    - /srv/docker/traefik/acme
+    - /srv/docker/traefik/certs
+
+- name: Upload Traefik config
+  template:
+    src: traefik.toml
+    dest: /srv/docker/traefik/traefik.toml
+
+- name: Start 'Traefik' container
+  docker_container:
+    docker_host: unix://var/run/docker.sock
+    name: traefik
+    image: "traefik:{{ traefik_version }}"
+    state: started
+    restart_policy: on-failure
+    ports:
+      - "80:80"
+      - "443:443"
+    purge_networks: yes
+    networks_cli_compatible: yes
+    networks:
+      - name: "{{ external_network }}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /srv/docker/traefik/traefik.toml:/etc/traefik/traefik.toml:ro
+      - /srv/docker/traefik/acme:/etc/traefik/acme:rw
+      - /srv/docker/traefik/certs:/opt/certs
+
+- name: "Define role executed var {{ role_name }}_was_executed"
+  set_fact:
+    "{{ role_name }}_was_executed": true
+    cacheable: true

@@ -1,0 +1,6 @@
+- name: "Create {{ external_network }} network"
+  docker_network:
+    name: "{{ external_network }}"
+    state: present
+    driver_options:
+      com.docker.network.driver.mtu: 1400

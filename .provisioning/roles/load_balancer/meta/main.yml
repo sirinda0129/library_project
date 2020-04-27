@@ -1,0 +1,4 @@
+---
+dependencies:
+  - role: docker
+    when: docker_was_executed is not defined

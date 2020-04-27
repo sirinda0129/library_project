@@ -1,0 +1,27 @@
+defaultEntryPoints = ["http", "https"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+watch = true
+exposedbydefault = false
+
+# Enable ACME (Let's Encrypt): automatic SSL
+[acme]
+# Email address used for registration
+email = "a.khmelevsky.255@gmail.com"
+storageFile = "/etc/traefik/acme/acme.json"
+entryPoint = "https"
+onDemand = false
+OnHostRule = true
+  # Use a HTTP-01 acme challenge rather than TLS-SNI-01 challenge
+  [acme.httpChallenge]
+  entryPoint = "http"
