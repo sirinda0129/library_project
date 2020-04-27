@@ -4,6 +4,7 @@
     state: directory
   with_items:
     - build
+    - compose
     - repo
     - docker
     - docker/app

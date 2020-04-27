@@ -1,9 +1,15 @@
-- name: Build image and with build args
-  docker_image:
-    name: myimage
-    build:
-      path: /path/to/build/dir
-      args:
-        log_volume: /var/log/myapp
-        listen_port: 8080
-    source: build
+- name: Create docker compose
+  template:
+    src: docker-compose.yml
+    dest: "/srv/compose/docker-compose.yml"
+
+- name: Create docker compose
+  template:
+    src: compose.env
+    dest: "/srv/compose/compose.env"
+
+- name: Start docker compose
+  docker_compose:
+    project_src: "/srv/compose/"
+    recreate: always
+    restarted: yes

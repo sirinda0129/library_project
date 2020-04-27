@@ -5,4 +5,4 @@
     - prepare
     - pull
     - build
-#    - compose
+    - compose
