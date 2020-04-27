@@ -1,9 +1,9 @@
-- name: Create docker compose
+- name: Create docker compose yaml
   template:
     src: docker-compose.yml
     dest: "/srv/compose/docker-compose.yml"
 
-- name: Create docker compose
+- name: Create docker compose env
   template:
     src: compose.env
     dest: "/srv/compose/compose.env"
