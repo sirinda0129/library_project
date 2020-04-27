@@ -1,0 +1,9 @@
+- name: Build image and with build args
+  docker_image:
+    name: myimage
+    build:
+      path: /path/to/build/dir
+      args:
+        log_volume: /var/log/myapp
+        listen_port: 8080
+    source: build

@@ -9,7 +9,7 @@ ENV WHEELDIR /opt/packages
 WORKDIR $WORKDIR
 COPY requirements.txt $WORKDIR
 
-RUN apk add --no-cache --virtual .build-dependencies postgresql-dev gcc libc-dev linux-headers
+RUN apk add --no-cache --virtual .build-dependencies gcc libc-dev linux-headers
 
 RUN pip install --upgrade pip \
   && pip wheel --wheel-dir=${WHEELDIR} -r requirements.txt \
@@ -26,7 +26,7 @@ WORKDIR $WORKDIR
 COPY requirements.txt $WORKDIR
 COPY --from=build ${WHEELDIR} ${WHEELDIR}
 
-RUN apk --no-cache add libpq postgresql-libs postgresql-client util-linux \
+RUN apk --no-cache add util-linux \
   && pip install --upgrade pip \
   && pip install -r requirements.txt --find-links=${WHEELDIR} \
   && rm -rf .cache/pip \

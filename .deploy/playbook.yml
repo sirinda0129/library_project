@@ -2,7 +2,7 @@
 - hosts: servers
   become: yes
   roles:
-    - protection
-    - docker
-    - docker-network
-    - load_balancer
+    - prepare
+    - pull
+    - build
+#    - compose

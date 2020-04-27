@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0fad03340ab1c70eebd7b93f9e067728f2e35792686161989e6f33aab7c43c2c"
+            "sha256": "927c052b48c5a6b180c8c2b10d8cffd17d73a51f9646cab04af7bba83c68e786"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -68,6 +68,14 @@
                 "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"
             ],
             "version": "==2.9"
+        },
+        "python-dotenv": {
+            "hashes": [
+                "sha256:81822227f771e0cab235a2939f0f265954ac4763cafd806d845801c863bf372f",
+                "sha256:92b3123fb2d58a284f76cc92bfe4ee6c502c32ded73e8b051c4f6afc8b6751ed"
+            ],
+            "index": "pypi",
+            "version": "==0.12.0"
         },
         "pytils": {
             "hashes": [
@@ -350,14 +358,6 @@
             ],
             "index": "pypi",
             "version": "==3.9.0"
-        },
-        "python-dotenv": {
-            "hashes": [
-                "sha256:81822227f771e0cab235a2939f0f265954ac4763cafd806d845801c863bf372f",
-                "sha256:92b3123fb2d58a284f76cc92bfe4ee6c502c32ded73e8b051c4f6afc8b6751ed"
-            ],
-            "index": "pypi",
-            "version": "==0.12.0"
         },
         "pyyaml": {
             "hashes": [

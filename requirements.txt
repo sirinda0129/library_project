@@ -6,6 +6,7 @@ django-filter==2.2.0
 django==2.2.10
 djangorestframework==3.11.0
 idna==2.9
+python-dotenv==0.12.0
 pytils==0.3
 pytz==2019.3
 requests==2.23.0

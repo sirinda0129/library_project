@@ -1,0 +1,15 @@
+- name: Clone the project to the bare repo directory
+  git:
+    repo: "https://github.com/sirinda0129/library_project.git"
+    dest: "/srv/repo"
+    bare: yes
+    update: yes
+    accept_hostkey: yes
+
+- name: Clone the project to the repo directory
+  git:
+    repo: "/srv/repo"
+    dest: "/srv/build"
+    update: yes
+    version: "master"
+    depth: 1

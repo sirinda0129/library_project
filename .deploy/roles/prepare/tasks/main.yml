@@ -1,0 +1,13 @@
+- name: Create folders
+  file:
+    path: '/srv/{{ item }}'
+    state: directory
+  with_items:
+    - build
+    - repo
+    - docker
+    - docker/app
+    - docker/app/static
+    - docker/app/media
+    - docker/app/database
+    - docker/app/sent_emails

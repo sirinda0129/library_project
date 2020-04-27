@@ -1,0 +1,127 @@
+### GitLab CI use this compose
+
+version: "3.5"
+services:
+  client-deployment:
+    image: $CI_REGISTRY_IMAGE:$VERSION
+    container_name: client-deployment
+    restart: on-failure
+    environment:
+      - DJANGO_CONFIGURATION=$DJANGO_CONFIGURATION
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+    env_file:
+      - secret.env
+      - common.env
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${GRAYLOG_HOST}:12201"
+    sysctls:
+      net.core.somaxconn: 1024
+    command: >
+      /bin/sh -c '
+      python manage.py migrate
+      '
+
+  client:
+    image: $CI_REGISTRY_IMAGE:$VERSION
+    container_name: client
+    restart: always
+    environment:
+      - DJANGO_CONFIGURATION=$DJANGO_CONFIGURATION
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+    env_file:
+      - secret.env
+      - common.env
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${GRAYLOG_HOST}:12201"
+    sysctls:
+      net.core.somaxconn: 1024
+    depends_on:
+      - client-deployment
+    networks:
+      - ${TRAEFIK_NETWORK}
+      - ${INTERNAL_NETWORK}
+    labels:
+      traefik.claim.frontend.rule: "Host:claim${OLD_DOMAIN_SUFFIX};PathPrefix:/api/,/admin,/swagger,/save_file,/toy_car,/callback"
+      traefik.baggage.frontend.rule: "Host:${BAGGAGE_DOMAIN};PathPrefix:/api/,/admin,/swagger,/save_file,/toy_car,/callback"
+      traefik.casco.frontend.rule: "Host:${CASCO_DOMAIN};PathPrefix:/api/,/admin,/swagger,/save_file,/toy_car,/callback"
+      traefik.renins.frontend.rule: "Host:${DOMAIN_RENINS};PathPrefix:/api/,/admin,/swagger,/save_file,/toy_car,/callback"
+      traefik.meta.frontend.rule: "Host:${META_CALLBACK_DOMAIN};PathPrefix:/api/,/admin,/swagger,/save_file,/toy_car,/callback"
+      traefik.protocol: "http"
+      traefik.enable: "true"
+      traefik.port: "8000"
+      traefik.docker.network: ${TRAEFIK_NETWORK}
+
+  client-worker:
+    image: $CI_REGISTRY_IMAGE:$VERSION
+    container_name: client-worker
+    restart: always
+    environment:
+      - DJANGO_CONFIGURATION=$DJANGO_CONFIGURATION
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+    env_file:
+      - secret.env
+      - common.env
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${GRAYLOG_HOST}:12201"
+    sysctls:
+      net.core.somaxconn: 1024
+    networks:
+      - ${INTERNAL_NETWORK}
+    depends_on:
+      - client
+    command: celery -A obverse worker --loglevel=info --concurrency=4
+
+  client-beat:
+    image: $CI_REGISTRY_IMAGE:$VERSION
+    container_name: client-beat
+    restart: always
+    environment:
+      - DJANGO_CONFIGURATION=$DJANGO_CONFIGURATION
+      - DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY
+    env_file:
+      - secret.env
+      - common.env
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${GRAYLOG_HOST}:12201"
+    sysctls:
+      net.core.somaxconn: 1024
+    networks:
+      - ${INTERNAL_NETWORK}
+    depends_on:
+      - client
+    command: celery beat -A obverse --loglevel=info
+
+  client-static:
+    image: $CI_REGISTRY_IMAGE:$VERSION-static
+    container_name: client-static
+    restart: always
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://${GRAYLOG_HOST}:12201"
+    sysctls:
+      net.core.somaxconn: 1024
+    networks:
+      - ${TRAEFIK_NETWORK}
+    labels:
+      traefik.claim.frontend.rule: "Host:claim${OLD_DOMAIN_SUFFIX};PathPrefix:/api-static"
+      traefik.baggage.frontend.rule: "Host:${BAGGAGE_DOMAIN};PathPrefix:/api-static"
+      traefik.casco.frontend.rule: "Host:${CASCO_DOMAIN};PathPrefix:/api-static"
+      traefik.renins.frontend.rule: "Host:${DOMAIN_RENINS};PathPrefix:/api-static"
+      traefik.meta.frontend.rule: "Host:${META_CALLBACK_DOMAIN};PathPrefix:/api-static"
+      traefik.protocol: "http"
+      traefik.enable: "true"
+      traefik.port: "80"
+networks:
+  ${TRAEFIK_NETWORK}:
+    external: true
+  ${INTERNAL_NETWORK}:
+    external: true

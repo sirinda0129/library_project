@@ -1,0 +1,6 @@
+- name: Build yatube image
+  docker_image:
+    name: yatube:latest
+    build:
+      path: /srv/build
+    source: build
