@@ -12,6 +12,11 @@ services:
       net.core.somaxconn: 1024
     networks:
       - traefik
+    volumes:
+      - /srv/docker/app/static:/opt/app/static
+      - /srv/docker/app/media:/opt/app/media
+      - /srv/docker/app/database:/opt/app/database
+      - /srv/docker/app/sent_emails:/opt/app/sent_emails
     labels:
       traefik.claim.frontend.rule: "Host:praktikum.must-hw.pw"
       traefik.protocol: "http"
