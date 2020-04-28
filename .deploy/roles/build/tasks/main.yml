@@ -3,4 +3,5 @@
     name: yatube:latest
     build:
       path: /srv/build
+      nocache: yes
     source: build
