@@ -18,7 +18,25 @@ services:
       - /srv/docker/app/database:/opt/app/database
       - /srv/docker/app/sent_emails:/opt/app/sent_emails
     labels:
-      traefik.claim.frontend.rule: "Host:praktikum.must-hw.pw"
+      traefik.frontend.rule: "Host:praktikum.must-hw.pw"
+      traefik.protocol: "http"
+      traefik.enable: "true"
+      traefik.port: "8000"
+      traefik.docker.network: traefik
+
+  yatube-static:
+    image: nginx:latest
+    container_name: yatube-static
+    restart: always
+    sysctls:
+      net.core.somaxconn: 1024
+    networks:
+      - traefik
+    volumes:
+      - /srv/docker/app/static:/usr/share/nginx/html/static:ro
+      - /srv/docker/app/media:/usr/share/nginx/html/media:ro
+    labels:
+      traefik.frontend.rule: "Host:praktikum.must-hw.pw;PathPrefix:/static,/media"
       traefik.protocol: "http"
       traefik.enable: "true"
       traefik.port: "8000"
