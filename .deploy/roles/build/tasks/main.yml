@@ -5,3 +5,5 @@
       path: /srv/build
       nocache: yes
     source: build
+    force_source: yes
+    state: present
