@@ -39,7 +39,7 @@ services:
       traefik.frontend.rule: "Host:praktikum.must-hw.pw;PathPrefix:/static,/media"
       traefik.protocol: "http"
       traefik.enable: "true"
-      traefik.port: "8000"
+      traefik.port: "80"
       traefik.docker.network: traefik
 
 networks:
