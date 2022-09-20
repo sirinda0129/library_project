@@ -11,5 +11,5 @@ pytils==0.3
 pytz==2019.3
 requests==2.23.0
 sqlparse==0.3.1
-urllib3==1.25.9
+urllib3==1.26.5
 uwsgi==2.0.18
